@@ -14,4 +14,6 @@ public class FighterSO : ScriptableObject
     //VieMax
     //StaminaMax
     //SpecialMeterMax
+    //
+    //ComboData
 }

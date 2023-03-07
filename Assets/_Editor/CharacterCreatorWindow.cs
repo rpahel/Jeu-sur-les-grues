@@ -1,8 +1,5 @@
-using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using UnityEditor.PackageManager.UI;
-using System;
+using UnityEngine;
 
 public class CharacterCreatorWindow : EditorWindow
 {
@@ -72,3 +69,22 @@ public class CharacterCreatorWindow : EditorWindow
         GUILayout.EndHorizontal();
     }
 }
+
+// Draw a line on GUI
+//Handles.BeginGUI();
+//{
+//    Handles.DrawLine(
+//    new Vector3(0, 0),
+//    new Vector3(position.width, position.height), 2);
+//}
+//Handles.EndGUI();
+
+// Get position of button
+//Rect lastRect;
+//GUILayout.BeginHorizontal();
+//{
+//    if (GUILayout.Button("Button")) {/*...*/}
+//    lastRect = GUILayoutUtility.GetLastRect();    //button rect    
+//}
+//GUILayout.EndHorizontal();
+//lastRect = GUILayoutUtility.GetLastRect();    //horizontal area rect
