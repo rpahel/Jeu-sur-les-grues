@@ -1,9 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "States", menuName = "ScriptableObjects/new States")]
+[CreateAssetMenu(fileName = "States", menuName = "ScriptableObjects/new States List")]
 public class StatesSO : ScriptableObject
 {
-    // List de States
-
-    //Constucteur
+    public StateSO[] states;
 }

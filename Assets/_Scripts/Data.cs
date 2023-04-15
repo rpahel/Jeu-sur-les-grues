@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GrujutsuData
+namespace Data
 {
     [System.Serializable]
     public enum ATTACKINPUT
@@ -14,7 +14,7 @@ namespace GrujutsuData
     [System.Serializable]
     public enum STATE
     {
-        NONE = 0,
+        DEFAULT = 0,
         BLEEDING = 1,
         BURNING = 2,
         POISONED = 3,
@@ -22,7 +22,7 @@ namespace GrujutsuData
         PARALYZED = 5,
     }
 
-    [System.Serializable]
+    //[System.Serializable]
     public class ComboData
     {
         [HideInInspector]
@@ -67,28 +67,5 @@ namespace GrujutsuData
 
             return newCombo;
         }
-    }
-
-    [System.Serializable]
-    public struct SpecialAttackData
-    {
-        //name
-        //Cout en stamina
-        //Degats infligés
-        //Degats subis(valeur négative = tu te soignes)
-        //Etat infligé
-        //Etat subis
-    }
-
-    [System.Serializable]
-    public struct StateData
-    {
-        public STATE state;
-        public Color filterColor;
-        public AnimationClip stateAnimation;
-        public float healthToAdd; // Amount of Health to add every loseCooldown period.
-        public float healthUpdateCooldown; // Period of time between each health update
-        public float staminaToAdd; // Amount of Stamina to add every loseCooldown period.
-        public float staminaUpdateCooldown; // Period of time between each stamina update
     }
 }
