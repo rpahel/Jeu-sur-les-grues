@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Data
+namespace Rpahel.Data
 {
     [System.Serializable]
     public enum ATTACKINPUT
@@ -49,23 +49,23 @@ namespace Data
 
         //===================================================
 
-        public ComboData CreateNextMove()
+        public void CreateNextMove()
         {
             ComboData newCombo = new(this);
 
             if(nextMoves != null && nextMoves.Length > 0)
             {
-                ComboData[] newNextMoves = new ComboData[nextMoves.Length + 1];
-                for(int i = 0; i < nextMoves.Length; i++)
-                    newNextMoves[i] = nextMoves[i];
-
-                newNextMoves[nextMoves.Length] = newCombo;
-                nextMoves = newNextMoves;
+                for (int i = 0; i < 2; i++)
+                {
+                    if (nextMoves[i] == null)
+                    {
+                        nextMoves[i] = newCombo;
+                        break;
+                    }
+                }
             }
             else
-                nextMoves = new ComboData[1] { newCombo };
-
-            return newCombo;
+                nextMoves = new ComboData[3] { newCombo, null, null };
         }
     }
 }

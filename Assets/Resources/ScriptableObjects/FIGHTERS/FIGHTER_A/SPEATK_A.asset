@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 289d25eb0f7165b408b465d1f0deb7d1, type: 3}
-  m_Name: A_SpeAtk
+  m_Name: SPEATK_A
   m_EditorClassIdentifier: 
-  name: A !!!
-  staminaCost: 100
-  inflictedDmg: 100
-  selfDmg: 100
-  inflictedState: 1
-  selfState: 2
+  name: 
+  staminaCost: 0
+  inflictedDmg: 0
+  selfDmg: 0
+  inflictedState: 0
+  selfState: 0
+  animation: {fileID: 0}
