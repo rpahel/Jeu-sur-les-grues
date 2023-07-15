@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed19b2fc17a66474a91954277d4603b4, type: 3}
   m_Name: FIGHTERS
   m_EditorClassIdentifier: 
-  fighters: []
+  fighters:
+  - {fileID: 11400000, guid: b2fc30f9e17527544aa3ae88bcd3da7f, type: 2}

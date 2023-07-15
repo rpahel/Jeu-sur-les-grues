@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Rpahel.Data
@@ -5,10 +6,10 @@ namespace Rpahel.Data
     [System.Serializable]
     public enum ATTACKINPUT
     {
-        RIGHT = 0,
-        DOWN = 1,
-        LEFT = 2,
-        UP = 3
+        UP = 0,
+        ATTACK = 1,
+        DOWN = 2,
+        DODGE = 3
     }
 
     [System.Serializable]
@@ -22,7 +23,6 @@ namespace Rpahel.Data
         PARALYZED = 5,
     }
 
-    //[System.Serializable]
     public class ComboData
     {
         [HideInInspector]
@@ -32,40 +32,96 @@ namespace Rpahel.Data
         public AnimationClip animation;
         public bool isFinalMove;
         public ComboData previousMove;
-        public ComboData[] nextMoves;
+        public ComboData[] nextMoves; // UP, RIGHT, DOWN
         public Vector2 PositionOnGui { get; set; }
 
-        public ComboData()
+        public ComboData(bool isFirst)
         {
+            if (!isFirst)
+                return;
+
             inputNb = 1;
+            attackInput = ATTACKINPUT.ATTACK;
+            name = "A";
+            nextMoves = new ComboData[3];
+
+            for(int i = 0; i<3; i++)
+            {
+                CreateNextMove((ATTACKINPUT)i);
+            }
         }
 
-        public ComboData(ComboData _previousMove)
+        private ComboData(ComboData _previousMove, ATTACKINPUT input)
         {
             previousMove = _previousMove;
             inputNb = _previousMove.inputNb + 1;
-            name = _previousMove.name + "\'s next move";
+            name = _previousMove.name + input.ToString()[0];
+            nextMoves = new ComboData[3];
         }
 
         //===================================================
 
-        public void CreateNextMove()
+        public void CreateNextMove(ATTACKINPUT input)
         {
-            ComboData newCombo = new(this);
+            if (nextMoves[(int)input] != null) // Le slot est deja pris
+                return;
 
-            if(nextMoves != null && nextMoves.Length > 0)
+            nextMoves[(int)input] = new(this, input);
+        }
+
+        // TODO : DELETE MOVE AND ITS CHILDREN USING RECURSION
+        public void DeleteMove()
+        {
+
+        }
+
+        public int GetComboDepth()
+        {
+            int deepestDepth = inputNb;
+            foreach (ComboData comboData in nextMoves)
             {
-                for (int i = 0; i < 2; i++)
-                {
-                    if (nextMoves[i] == null)
-                    {
-                        nextMoves[i] = newCombo;
-                        break;
-                    }
-                }
+                if(comboData == null)
+                    continue;
+
+                int newDepth = comboData.GetComboDepth();
+                if(newDepth > deepestDepth)
+                    deepestDepth = newDepth;
             }
-            else
-                nextMoves = new ComboData[3] { newCombo, null, null };
+            return deepestDepth;
+        }
+
+        public int GetNbOfCombosAtDepth(int depth)
+        {
+            if(depth == inputNb)
+                return 1;
+
+            int ret = 0;
+            for(int i = 0; i < 3; i++)
+            {
+                if (nextMoves[i] == null)
+                    continue;
+
+                ret += nextMoves[i].GetNbOfCombosAtDepth(depth);
+            }
+
+            return ret;
+        }
+
+        public ComboData[] GetAllCombosAtDepth(int depth)
+        {
+            if (depth == inputNb)
+                return new ComboData[1] { this };
+
+            List<ComboData> ret = new();
+            for (int i = 0; i < 3; i++)
+            {
+                if (nextMoves[i] == null)
+                    continue;
+
+                ret.AddRange(nextMoves[i].GetAllCombosAtDepth(depth));
+            }
+
+            return ret.ToArray();
         }
     }
 }
