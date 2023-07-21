@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FIGHTERS
   m_EditorClassIdentifier: 
   fighters:
-  - {fileID: 11400000, guid: b2fc30f9e17527544aa3ae88bcd3da7f, type: 2}
+  - {fileID: 11400000, guid: a6b029bcf40e14847be9d0b7aedca8be, type: 2}

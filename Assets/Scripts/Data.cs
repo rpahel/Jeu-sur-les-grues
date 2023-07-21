@@ -23,6 +23,7 @@ namespace Rpahel.Data
         PARALYZED = 5,
     }
 
+    [System.Serializable]
     public class ComboData
     {
         [HideInInspector]
@@ -31,9 +32,15 @@ namespace Rpahel.Data
         public ATTACKINPUT attackInput;
         public AnimationClip animation;
         public bool isFinalMove;
-        public ComboData previousMove;
-        public ComboData[] nextMoves; // UP, RIGHT, DOWN
+        [SerializeField, HideInInspector]
+        private ComboData[] nextMoves = null; // UP, RIGHT, DOWN
         public Vector2 PositionOnGui { get; set; }
+        public Vector2 ParentPositionOnGui { get; set; }
+
+        public ComboData()
+        {
+            nextMoves = null; // S'assurer que nextMoves est bien vide pour empecher Unity de faire des tableaux a l'infini
+        }
 
         public ComboData(bool isFirst)
         {
@@ -45,7 +52,7 @@ namespace Rpahel.Data
             name = "A";
             nextMoves = new ComboData[3];
 
-            for(int i = 0; i<3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 CreateNextMove((ATTACKINPUT)i);
             }
@@ -53,16 +60,17 @@ namespace Rpahel.Data
 
         private ComboData(ComboData _previousMove, ATTACKINPUT input)
         {
-            previousMove = _previousMove;
             inputNb = _previousMove.inputNb + 1;
             name = _previousMove.name + input.ToString()[0];
-            nextMoves = new ComboData[3];
+            attackInput = input;
         }
 
         //===================================================
 
         public void CreateNextMove(ATTACKINPUT input)
         {
+            nextMoves ??= new ComboData[3];
+
             if (nextMoves[(int)input] != null) // Le slot est deja pris
                 return;
 
@@ -77,14 +85,17 @@ namespace Rpahel.Data
 
         public int GetComboDepth()
         {
+            if(nextMoves == null)
+                return inputNb;
+
             int deepestDepth = inputNb;
             foreach (ComboData comboData in nextMoves)
             {
-                if(comboData == null)
+                if (comboData == null)
                     continue;
 
                 int newDepth = comboData.GetComboDepth();
-                if(newDepth > deepestDepth)
+                if (newDepth > deepestDepth)
                     deepestDepth = newDepth;
             }
             return deepestDepth;
@@ -92,11 +103,14 @@ namespace Rpahel.Data
 
         public int GetNbOfCombosAtDepth(int depth)
         {
-            if(depth == inputNb)
+            if (depth == inputNb)
                 return 1;
 
+            if (nextMoves == null)
+                return 0;
+
             int ret = 0;
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (nextMoves[i] == null)
                     continue;
@@ -112,6 +126,9 @@ namespace Rpahel.Data
             if (depth == inputNb)
                 return new ComboData[1] { this };
 
+            if (nextMoves == null)
+                return null;
+
             List<ComboData> ret = new();
             for (int i = 0; i < 3; i++)
             {
@@ -122,6 +139,25 @@ namespace Rpahel.Data
             }
 
             return ret.ToArray();
+        }
+
+        public ComboData GetNextMoveByInput(int input)
+        {
+            if (nextMoves == null || nextMoves.Length <= input) return null;
+            return nextMoves[input];
+        }
+
+        public ComboData[] GetNextMoves() {  return nextMoves; }
+
+        public void SetPositionOnGuiOnChildren(Vector2 pos)
+        {
+            if (nextMoves == null) return;
+
+            foreach (var move in nextMoves)
+            {
+                if (move != null)
+                    move.ParentPositionOnGui = pos;
+            }
         }
     }
 }

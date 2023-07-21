@@ -32,6 +32,7 @@ namespace Rpahel
         public float maxSpecialMeter;
 
         //ComboData
+        [SerializeField, HideInInspector]
         public ComboData comboData;
         //Special Attack
         public SpecialAttackSO specialAttack;
