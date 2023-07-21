@@ -30,8 +30,10 @@ namespace Rpahel.Data
         public int inputNb; // Starts at 1 for first input
         public string name;
         public ATTACKINPUT attackInput;
+        public int damage;
+        public STATE inflictedState;
         public AnimationClip animation;
-        public bool isFinalMove;
+        //public bool isFinalMove; // Forcement final si y a pas d'enfants
         [SerializeField, HideInInspector]
         private ComboData[] nextMoves = null; // UP, RIGHT, DOWN
         public Vector2 PositionOnGui { get; set; }
