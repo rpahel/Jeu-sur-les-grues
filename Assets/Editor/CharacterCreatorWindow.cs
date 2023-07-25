@@ -12,15 +12,17 @@ namespace Rpahel
         private Vector2 _characterScrollPosition, _statsScrollPosition, _comboScrollPosition;
         private FighterSO selectedFighter;
         private ComboData fighterComboData;
-        private ComboData selectedCombo;
-        private int[] combosNbPerInput; // Number of combos for each input
-        private ComboData[][] combosPerInput; // Combos for each input
-        private int comboDepth;
         private const string fightersSOpath = "Assets/Resources/ScriptableObjects/FIGHTERS";
         private static string[] subFolders;
         private static string[] fighterNames;
         private string newFighterName;
         private static FightersSO fightersList;
+
+        private ComboData selectedCombo;
+        private int[] combosNbPerInput; // Number of combos for each input
+        private ComboData[][] combosPerInput; // Combos for each input
+        private int comboDepth;
+        private ACTIONINPUT[] availableNextMoves;
 
         //=========================================================
 
@@ -42,20 +44,12 @@ namespace Rpahel
 
         public void OnDestroy()
         {
-            if (selectedFighter)
-            {
-                EditorUtility.SetDirty(selectedFighter);
-                AssetDatabase.SaveAssetIfDirty(selectedFighter);
-            }
+            Save(selectedFighter);
         }
 
         public void OnLostFocus()
         {
-            if (selectedFighter)
-            {
-                EditorUtility.SetDirty(selectedFighter);
-                AssetDatabase.SaveAssetIfDirty(selectedFighter);
-            }
+            Save(selectedFighter);
         }
 
         public void OnFocus()
@@ -78,14 +72,19 @@ namespace Rpahel
                 GUILayout.BeginVertical(GUILayout.MinWidth(250), GUILayout.MaxWidth(250), GUILayout.ExpandWidth(false));
                 {
                     CharactersWindow();
-                    StatsWindow();
+
+                    if (selectedCombo == null)
+                        StatsWindow();
+                    else
+                        ComboDataWindow();
                 }
                 GUILayout.EndVertical();
 
-                CombosWindow();
+                ComboTreeWindow();
             }
             GUILayout.EndHorizontal();
         }
+
 
         private static string GetFighterNameFromFolder(string folderPath)
         {
@@ -102,6 +101,15 @@ namespace Rpahel
             }
 
             return fighterNames;
+        }
+
+        private void Save<T>(T objectToSave) where T : ScriptableObject
+        {
+            if (objectToSave != null)
+            {
+                EditorUtility.SetDirty(objectToSave);
+                AssetDatabase.SaveAssetIfDirty(objectToSave);
+            }
         }
 
         private bool IsNameUsed(string name)
@@ -139,11 +147,7 @@ namespace Rpahel
                 string fighterName = GetFighterNameFromFolder(folder);
                 if (GUILayout.Button(fighterName))
                 {
-                    if (selectedFighter)
-                    {
-                        EditorUtility.SetDirty(selectedFighter);
-                        AssetDatabase.SaveAssetIfDirty(selectedFighter);
-                    }
+                    Save(selectedFighter);
                     selectedFighter = Resources.Load<FighterSO>("ScriptableObjects/FIGHTERS" + "/FIGHTER_" + fighterName + "/FIGHTER_" + fighterName);
                     LoadFighterComboData();
                 }
@@ -180,11 +184,9 @@ namespace Rpahel
             // Ajouter a la liste des FIGHTERS
             fightersList.fighters.Add(selectedFighter);
 
-            EditorUtility.SetDirty(selectedFighter);
-            AssetDatabase.SaveAssetIfDirty(selectedFighter);
+            Save(selectedFighter);
 
-            EditorUtility.SetDirty(fightersList);
-            AssetDatabase.SaveAssetIfDirty(fightersList);
+            Save(fightersList);
         }
         
         private void CreateCharacterButton()
@@ -249,8 +251,8 @@ namespace Rpahel
                     GUILayout.Label("End Dialogue: ", GUILayout.ExpandWidth(false));
                     selectedFighter.endDialogue = EditorGUILayout.TextArea(selectedFighter.endDialogue, textAreaStyle);
 
-                    selectedFighter.maxHealth = EditorGUILayout.FloatField("Max Health: ", selectedFighter.maxHealth);
-                    selectedFighter.maxStamina = EditorGUILayout.FloatField("Max Stamina: ", selectedFighter.maxStamina);
+                    selectedFighter.maxHealth = EditorGUILayout.IntField("Max Health: ", selectedFighter.maxHealth);
+                    selectedFighter.maxStamina = EditorGUILayout.IntField("Max Stamina: ", selectedFighter.maxStamina);
                     selectedFighter.maxSpecialMeter = EditorGUILayout.FloatField("Max Special Meter: ", selectedFighter.maxSpecialMeter);
 
                     selectedFighter.specialAttack = (SpecialAttackSO)EditorGUILayout.ObjectField("Special Attack: ", selectedFighter.specialAttack, typeof(SpecialAttackSO), false);
@@ -261,7 +263,57 @@ namespace Rpahel
             GUILayout.EndScrollView();
         }
 
-        private void CombosWindow()
+        private void ShowAvailableNextMovesButtons()
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                if (availableNextMoves[i] != ACTIONINPUT.DODGE && GUILayout.Button(((ACTIONINPUT)i).ToString()))
+                {
+                    selectedCombo.CreateNextMove((ACTIONINPUT)i);
+                    availableNextMoves = selectedCombo.AvailableNextMoves();
+                    LoadFighterComboData();
+                    Save(selectedFighter);
+                }
+            }
+        }
+
+        private void ComboDataWindow()
+        {
+            // Styles
+            GUIStyle textAreaStyle = new GUIStyle(EditorStyles.textArea);
+            textAreaStyle.wordWrap = true;
+            GUIStyle labelStyle = new GUIStyle(EditorStyles.label);
+            labelStyle.wordWrap = true;
+
+            // Stats section
+            _statsScrollPosition = GUILayout.BeginScrollView(_statsScrollPosition);
+            {
+                GUILayout.Label(selectedFighter.name + ": Combo " + selectedCombo.name, labelStyle);
+
+                selectedCombo.name = EditorGUILayout.TextField("Name: ", selectedCombo.name);
+                GUILayout.Label("Attack Input: " + selectedCombo.actionInput.ToString());
+                selectedCombo.damage = EditorGUILayout.IntField("Damage: ", selectedCombo.damage);
+                selectedCombo.inflictedState = (STATE)EditorGUILayout.EnumPopup("Inflicted State: ", selectedCombo.inflictedState);
+                selectedCombo.animation = (AnimationClip)EditorGUILayout.ObjectField("Animation Clip: ", selectedCombo.animation, typeof(AnimationClip), false);
+                
+                if (availableNextMoves != null)
+                {
+                    EditorGUILayout.Space(20);
+                    GUILayout.Label("Create next move.");
+                    ShowAvailableNextMovesButtons();
+                }
+
+                EditorGUILayout.Space(20);
+
+                if (selectedCombo.inputNb > 2 && GUILayout.Button("Delete Combo"))
+                {
+                    // TODO : DELETE COMBO
+                }
+            }
+            GUILayout.EndScrollView();
+        }
+
+        private void ComboTreeWindow()
         {
             _comboScrollPosition = GUILayout.BeginScrollView(_comboScrollPosition, GUILayout.Width(position.width - 250));
             {
@@ -279,7 +331,10 @@ namespace Rpahel
                                 ComboData currentCombo = combosPerInput[i][j];
 
                                 if (GUILayout.Button(currentCombo.name))
+                                {
                                     selectedCombo = currentCombo;
+                                    availableNextMoves = selectedCombo.AvailableNextMoves();
+                                }
                                                                 
                                 Rect lastRect = GUILayoutUtility.GetLastRect();
                                 currentCombo.PositionOnGui = lastRect.center - 0.5f * lastRect.width * Vector2.right;
@@ -306,5 +361,3 @@ namespace Rpahel
         }
     }
 }
-
-// TODO : S'occuper du bail ta mere

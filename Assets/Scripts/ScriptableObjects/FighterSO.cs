@@ -25,9 +25,9 @@ namespace Rpahel
         public string endDialogue;
 
         //VieMax
-        public float maxHealth;
+        public int maxHealth;
         //StaminaMax
-        public float maxStamina;
+        public int maxStamina;
         //SpecialMeterMax
         public float maxSpecialMeter;
 

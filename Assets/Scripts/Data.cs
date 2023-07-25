@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Rpahel.Data
 {
     [System.Serializable]
-    public enum ATTACKINPUT
+    public enum ACTIONINPUT
     {
         UP = 0,
         ATTACK = 1,
@@ -29,7 +29,7 @@ namespace Rpahel.Data
         [HideInInspector]
         public int inputNb; // Starts at 1 for first input
         public string name;
-        public ATTACKINPUT attackInput;
+        public ACTIONINPUT actionInput;
         public int damage;
         public STATE inflictedState;
         public AnimationClip animation;
@@ -50,30 +50,30 @@ namespace Rpahel.Data
                 return;
 
             inputNb = 1;
-            attackInput = ATTACKINPUT.ATTACK;
+            actionInput = ACTIONINPUT.ATTACK;
             name = "A";
             nextMoves = new ComboData[3];
 
             for (int i = 0; i < 3; i++)
             {
-                CreateNextMove((ATTACKINPUT)i);
+                CreateNextMove((ACTIONINPUT)i);
             }
         }
 
-        private ComboData(ComboData _previousMove, ATTACKINPUT input)
+        private ComboData(ComboData _previousMove, ACTIONINPUT input)
         {
             inputNb = _previousMove.inputNb + 1;
             name = _previousMove.name + input.ToString()[0];
-            attackInput = input;
+            actionInput = input;
         }
 
         //===================================================
 
-        public void CreateNextMove(ATTACKINPUT input)
+        public void CreateNextMove(ACTIONINPUT input)
         {
             nextMoves ??= new ComboData[3];
 
-            if (nextMoves[(int)input] != null) // Le slot est deja pris
+            if (nextMoves[(int)input] != null && nextMoves[(int)input].name != null) // Le slot est deja pris
                 return;
 
             nextMoves[(int)input] = new(this, input);
@@ -114,7 +114,7 @@ namespace Rpahel.Data
             int ret = 0;
             for (int i = 0; i < 3; i++)
             {
-                if (nextMoves[i] == null)
+                if (nextMoves[i] == null || nextMoves[i].name == "")
                     continue;
 
                 ret += nextMoves[i].GetNbOfCombosAtDepth(depth);
@@ -134,10 +134,12 @@ namespace Rpahel.Data
             List<ComboData> ret = new();
             for (int i = 0; i < 3; i++)
             {
-                if (nextMoves[i] == null)
+                if (nextMoves[i] == null || nextMoves[i].name == "")
                     continue;
 
-                ret.AddRange(nextMoves[i].GetAllCombosAtDepth(depth));
+                ComboData[] combos = nextMoves[i].GetAllCombosAtDepth(depth);
+                if (combos != null)
+                    ret.AddRange(combos);
             }
 
             return ret.ToArray();
@@ -150,6 +152,33 @@ namespace Rpahel.Data
         }
 
         public ComboData[] GetNextMoves() {  return nextMoves; }
+
+        public ACTIONINPUT[] AvailableNextMoves()
+        {
+            if(nextMoves == null)
+                return new ACTIONINPUT[3] { ACTIONINPUT.UP, ACTIONINPUT.ATTACK, ACTIONINPUT.DOWN };
+
+            ACTIONINPUT[] nextAvailableMoves = new ACTIONINPUT[3];
+
+            bool isFull = true;
+            for(int i = 0;i < 3; i++)
+            {
+                if (nextMoves[i] != null && nextMoves[i].name != "" && nextMoves[i].name != null)
+                {
+                    nextAvailableMoves[i] = ACTIONINPUT.DODGE;
+                }
+                else
+                {
+                    isFull = false;
+                    nextAvailableMoves[i] = (ACTIONINPUT)i;
+                }
+            }
+
+            if (isFull)
+                return null;
+
+            return nextAvailableMoves;
+        }
 
         public void SetPositionOnGuiOnChildren(Vector2 pos)
         {
