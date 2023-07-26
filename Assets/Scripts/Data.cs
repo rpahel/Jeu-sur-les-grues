@@ -71,9 +71,10 @@ namespace Rpahel.Data
 
         public void CreateNextMove(ACTIONINPUT input)
         {
-            nextMoves ??= new ComboData[3];
+            if(nextMoves == null || nextMoves.Length == 0)
+                nextMoves = new ComboData[3];
 
-            if (nextMoves[(int)input] != null && nextMoves[(int)input].name != null) // Le slot est deja pris
+            if (nextMoves[(int)input] != null && nextMoves[(int)input].name != null && nextMoves[(int)input].name != "") // Le slot est deja pris
                 return;
 
             nextMoves[(int)input] = new(this, input);
@@ -82,12 +83,12 @@ namespace Rpahel.Data
         // TODO : DELETE MOVE AND ITS CHILDREN USING RECURSION
         public void DeleteMove()
         {
-
+            Debug.LogWarning("Pas encore codé ça fréro.");
         }
 
         public int GetComboDepth()
         {
-            if(nextMoves == null)
+            if(nextMoves == null || nextMoves.Length == 0)
                 return inputNb;
 
             int deepestDepth = inputNb;
@@ -108,7 +109,7 @@ namespace Rpahel.Data
             if (depth == inputNb)
                 return 1;
 
-            if (nextMoves == null)
+            if (nextMoves == null || nextMoves.Length == 0)
                 return 0;
 
             int ret = 0;
@@ -128,7 +129,7 @@ namespace Rpahel.Data
             if (depth == inputNb)
                 return new ComboData[1] { this };
 
-            if (nextMoves == null)
+            if (nextMoves == null || nextMoves.Length == 0)
                 return null;
 
             List<ComboData> ret = new();
@@ -155,7 +156,7 @@ namespace Rpahel.Data
 
         public ACTIONINPUT[] AvailableNextMoves()
         {
-            if(nextMoves == null)
+            if(nextMoves == null || nextMoves.Length == 0)
                 return new ACTIONINPUT[3] { ACTIONINPUT.UP, ACTIONINPUT.ATTACK, ACTIONINPUT.DOWN };
 
             ACTIONINPUT[] nextAvailableMoves = new ACTIONINPUT[3];
@@ -163,7 +164,7 @@ namespace Rpahel.Data
             bool isFull = true;
             for(int i = 0;i < 3; i++)
             {
-                if (nextMoves[i] != null && nextMoves[i].name != "" && nextMoves[i].name != null)
+                if (nextMoves[i] != null && nextMoves[i].name != null && nextMoves[i].name != "")
                 {
                     nextAvailableMoves[i] = ACTIONINPUT.DODGE;
                 }
@@ -182,7 +183,7 @@ namespace Rpahel.Data
 
         public void SetPositionOnGuiOnChildren(Vector2 pos)
         {
-            if (nextMoves == null) return;
+            if (nextMoves == null || nextMoves.Length == 0) return;
 
             foreach (var move in nextMoves)
             {

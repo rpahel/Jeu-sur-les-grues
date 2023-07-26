@@ -23,6 +23,7 @@ namespace Rpahel
         private ComboData[][] combosPerInput; // Combos for each input
         private int comboDepth;
         private ACTIONINPUT[] availableNextMoves;
+        private bool hasClickedDelete;
 
         //=========================================================
 
@@ -133,6 +134,9 @@ namespace Rpahel
             for (int i = 1; i <= comboDepth; i++)
             {
                 combosNbPerInput[i - 1] = fighterComboData.GetNbOfCombosAtDepth(i);
+
+                //Debug.Log("Combos at depth " + i + ": " + combosNbPerInput[i - 1]);
+
                 if (i == 1)
                     combosPerInput[i - 1] = new ComboData[1] { fighterComboData };
                 else
@@ -148,6 +152,7 @@ namespace Rpahel
                 if (GUILayout.Button(fighterName))
                 {
                     Save(selectedFighter);
+                    selectedCombo = null;
                     selectedFighter = Resources.Load<FighterSO>("ScriptableObjects/FIGHTERS" + "/FIGHTER_" + fighterName + "/FIGHTER_" + fighterName);
                     LoadFighterComboData();
                 }
@@ -206,6 +211,8 @@ namespace Rpahel
                     }
                     else
                     {
+                        Save(selectedFighter);
+                        selectedCombo = null;
                         CreateNewCharacter();
                     }
                 }
@@ -267,12 +274,14 @@ namespace Rpahel
         {
             for(int i = 0; i < 3; i++)
             {
+                if (availableNextMoves == null) break;
+
                 if (availableNextMoves[i] != ACTIONINPUT.DODGE && GUILayout.Button(((ACTIONINPUT)i).ToString()))
                 {
                     selectedCombo.CreateNextMove((ACTIONINPUT)i);
-                    availableNextMoves = selectedCombo.AvailableNextMoves();
                     LoadFighterComboData();
                     Save(selectedFighter);
+                    availableNextMoves = selectedCombo.AvailableNextMoves();
                 }
             }
         }
@@ -305,9 +314,27 @@ namespace Rpahel
 
                 EditorGUILayout.Space(20);
 
-                if (selectedCombo.inputNb > 2 && GUILayout.Button("Delete Combo"))
+                if (selectedCombo.inputNb > 2)
                 {
-                    // TODO : DELETE COMBO
+                    if (!hasClickedDelete)
+                    {
+                        if(GUILayout.Button("Delete Combo"))
+                            hasClickedDelete = true;
+                    }
+                    else
+                    {
+                        GUILayout.Label("Are you sure ?");
+
+                        if (GUILayout.Button("NO, DON'T DELETE"))
+                            hasClickedDelete = false;
+
+                        if (GUILayout.Button("YES, DELETE THE COMBO MOVE"))
+                        {
+                            hasClickedDelete = false;
+                            selectedCombo.DeleteMove();
+                            selectedCombo = null;
+                        }
+                    }
                 }
             }
             GUILayout.EndScrollView();
