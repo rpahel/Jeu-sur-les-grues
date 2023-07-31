@@ -333,6 +333,8 @@ namespace Rpahel
                             hasClickedDelete = false;
                             selectedCombo.DeleteMove();
                             selectedCombo = null;
+                            LoadFighterComboData();
+                            Save(selectedFighter);
                         }
                     }
                 }

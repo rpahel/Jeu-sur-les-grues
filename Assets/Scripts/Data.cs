@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 namespace Rpahel.Data
 {
@@ -80,10 +82,24 @@ namespace Rpahel.Data
             nextMoves[(int)input] = new(this, input);
         }
 
-        // TODO : DELETE MOVE AND ITS CHILDREN USING RECURSION
         public void DeleteMove()
         {
-            Debug.LogWarning("Pas encore codé ça fréro.");
+            if (nextMoves != null && nextMoves.Length != 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (nextMoves[i] == null)
+                        continue;
+
+                    nextMoves[i].DeleteMove();
+                    nextMoves[i] = null;
+                }
+            }
+
+            inputNb = 0;
+            actionInput = (ACTIONINPUT)0;
+            name = null;
+            nextMoves = null;
         }
 
         public int GetComboDepth()
