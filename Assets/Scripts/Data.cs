@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
+using Rpahel.Interfaces;
 using UnityEngine;
-using UnityEngine.Scripting;
 
 namespace Rpahel.Data
 {
@@ -25,187 +23,46 @@ namespace Rpahel.Data
         PARALYZED = 5,
     }
 
-    [System.Serializable]
-    public class ComboData
+    public class AttackData : ScriptableObject, IGUIRenderable
     {
         [HideInInspector]
-        public int inputNb; // Starts at 1 for first input
-        public string name;
-        public ACTIONINPUT actionInput;
-        public int damage;
-        public STATE inflictedState;
-        public AnimationClip animation;
-        //public bool isFinalMove; // Forcement final si y a pas d'enfants
-        [SerializeField, HideInInspector]
-        private ComboData[] nextMoves = null; // UP, RIGHT, DOWN
+        private int inputNb; // Starts at 1 for first input
+        private new string name;
+        private int damage;
+        private ACTIONINPUT actionInput;
+        private STATE inflictedState;
+        private AnimationClip animation;
+        private AttackData[] childAttacks = null; // UP, RIGHT, DOWN
+
+#if UNITY_EDITOR
         public Vector2 PositionOnGui { get; set; }
         public Vector2 ParentPositionOnGui { get; set; }
+#endif
 
-        public ComboData()
+
+#if UNITY_EDITOR
+        public void Initialise(int inputNb, string name, ACTIONINPUT actionInput)
         {
-            nextMoves = null; // S'assurer que nextMoves est bien vide pour empecher Unity de faire des tableaux a l'infini
+            this.inputNb = inputNb;
+            this.name = name;
+            this.actionInput = actionInput;
         }
 
-        public ComboData(bool isFirst)
+        public void CreateChildAttack(ACTIONINPUT actionInput)
         {
-            if (!isFirst)
+            childAttacks ??= new AttackData[3];
+
+            if (childAttacks[(int)actionInput] != null)
+            {
+                Debug.LogWarning("You are trying to create an attack in an already occupied slot.");
                 return;
-
-            inputNb = 1;
-            actionInput = ACTIONINPUT.ATTACK;
-            name = "A";
-            nextMoves = new ComboData[3];
-
-            for (int i = 0; i < 3; i++)
-            {
-                CreateNextMove((ACTIONINPUT)i);
-            }
-        }
-
-        private ComboData(ComboData _previousMove, ACTIONINPUT input)
-        {
-            inputNb = _previousMove.inputNb + 1;
-            name = _previousMove.name + input.ToString()[0];
-            actionInput = input;
-        }
-
-        //===================================================
-
-        public void CreateNextMove(ACTIONINPUT input)
-        {
-            if(nextMoves == null || nextMoves.Length == 0)
-                nextMoves = new ComboData[3];
-
-            if (nextMoves[(int)input] != null && nextMoves[(int)input].name != null && nextMoves[(int)input].name != "") // Le slot est deja pris
-                return;
-
-            nextMoves[(int)input] = new(this, input);
-        }
-
-        public void DeleteMove()
-        {
-            if (nextMoves != null && nextMoves.Length != 0)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    if (nextMoves[i] == null)
-                        continue;
-
-                    nextMoves[i].DeleteMove();
-                    nextMoves[i] = null;
-                }
             }
 
-            inputNb = 0;
-            actionInput = (ACTIONINPUT)0;
-            name = null;
-            nextMoves = null;
+            AttackData attackData = ScriptableObject.CreateInstance<AttackData>();
+            attackData.Initialise(inputNb + 1, name + actionInput.ToString()[0], actionInput);
         }
 
-        public int GetComboDepth()
-        {
-            if(nextMoves == null || nextMoves.Length == 0)
-                return inputNb;
-
-            int deepestDepth = inputNb;
-            foreach (ComboData comboData in nextMoves)
-            {
-                if (comboData == null)
-                    continue;
-
-                int newDepth = comboData.GetComboDepth();
-                if (newDepth > deepestDepth)
-                    deepestDepth = newDepth;
-            }
-            return deepestDepth;
-        }
-
-        public int GetNbOfCombosAtDepth(int depth)
-        {
-            if (depth == inputNb)
-                return 1;
-
-            if (nextMoves == null || nextMoves.Length == 0)
-                return 0;
-
-            int ret = 0;
-            for (int i = 0; i < 3; i++)
-            {
-                if (nextMoves[i] == null || nextMoves[i].name == "")
-                    continue;
-
-                ret += nextMoves[i].GetNbOfCombosAtDepth(depth);
-            }
-
-            return ret;
-        }
-
-        public ComboData[] GetAllCombosAtDepth(int depth)
-        {
-            if (depth == inputNb)
-                return new ComboData[1] { this };
-
-            if (nextMoves == null || nextMoves.Length == 0)
-                return null;
-
-            List<ComboData> ret = new();
-            for (int i = 0; i < 3; i++)
-            {
-                if (nextMoves[i] == null || nextMoves[i].name == "")
-                    continue;
-
-                ComboData[] combos = nextMoves[i].GetAllCombosAtDepth(depth);
-                if (combos != null)
-                    ret.AddRange(combos);
-            }
-
-            return ret.ToArray();
-        }
-
-        public ComboData GetNextMoveByInput(int input)
-        {
-            if (nextMoves == null || nextMoves.Length <= input) return null;
-            return nextMoves[input];
-        }
-
-        public ComboData[] GetNextMoves() {  return nextMoves; }
-
-        public ACTIONINPUT[] AvailableNextMoves()
-        {
-            if(nextMoves == null || nextMoves.Length == 0)
-                return new ACTIONINPUT[3] { ACTIONINPUT.UP, ACTIONINPUT.ATTACK, ACTIONINPUT.DOWN };
-
-            ACTIONINPUT[] nextAvailableMoves = new ACTIONINPUT[3];
-
-            bool isFull = true;
-            for(int i = 0;i < 3; i++)
-            {
-                if (nextMoves[i] != null && nextMoves[i].name != null && nextMoves[i].name != "")
-                {
-                    nextAvailableMoves[i] = ACTIONINPUT.DODGE;
-                }
-                else
-                {
-                    isFull = false;
-                    nextAvailableMoves[i] = (ACTIONINPUT)i;
-                }
-            }
-
-            if (isFull)
-                return null;
-
-            return nextAvailableMoves;
-        }
-
-        public void SetPositionOnGuiOnChildren(Vector2 pos)
-        {
-            if (nextMoves == null || nextMoves.Length == 0) return;
-
-            foreach (var move in nextMoves)
-            {
-                if (move != null)
-                    move.ParentPositionOnGui = pos;
-            }
-        }
+        public void OnGUI() { }
+#endif
     }
 }

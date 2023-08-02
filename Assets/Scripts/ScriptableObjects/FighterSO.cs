@@ -1,4 +1,3 @@
-using Rpahel.Data;
 using UnityEngine;
 
 namespace Rpahel
@@ -7,38 +6,29 @@ namespace Rpahel
     [CreateAssetMenu(fileName = "Fighter", menuName = "ScriptableObjects/new Fighter")]
     public class FighterSO : ScriptableObject
     {
-        //Name
-        public new string name;
-        //Icone
-        public Sprite icon;
-        //Game Object
-        public GameObject fighterPrefab;
-        //Color
-        public Color color;
-        //Type (court texte ex: "Grue Ninja")
-        public string species;
-        //Description
-        public string description;
-        //StartFightDialogue
-        public string startDialogue;
-        //EndFightDialogue
-        public string endDialogue;
+        // Basic Info
+        private new string name;
+        private Sprite icon;
+        private GameObject fighterPrefab;
+        private Color color;
 
-        //VieMax
-        public int maxHealth;
-        //StaminaMax
-        public int maxStamina;
-        //SpecialMeterMax
-        public float maxSpecialMeter;
+        // Lore
+        private string species; // Court texte. Ex: "Grue Ninja"
+        private string description;
+        private string startDialogue;
+        private string endDialogue;
 
-        //ComboData
-        [SerializeField, HideInInspector]
-        public ComboData comboData;
-        //Special Attack
-        public SpecialAttackSO specialAttack;
+        // Stats
+        private int maxHealth;
+        private int maxStamina;
+        private float maxSpecialMeter;
+
+        // Attack
+        private Attack attack;
+        private SpecialAttackSO specialAttack;
 
 #if UNITY_EDITOR
-        public string filePath;
+        private string filePath;
 #endif
     }
 }

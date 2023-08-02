@@ -1,6 +1,4 @@
-using Rpahel;
 using Rpahel.Data;
-using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -11,16 +9,16 @@ namespace Rpahel
     {
         private Vector2 _characterScrollPosition, _statsScrollPosition, _comboScrollPosition;
         private FighterSO selectedFighter;
-        private ComboData fighterComboData;
+        //private ComboData fighterComboData;
         private const string fightersSOpath = "Assets/Resources/ScriptableObjects/FIGHTERS";
         private static string[] subFolders;
         private static string[] fighterNames;
         private string newFighterName;
         private static FightersSO fightersList;
 
-        private ComboData selectedCombo;
+        //private ComboData selectedCombo;
         private int[] combosNbPerInput; // Number of combos for each input
-        private ComboData[][] combosPerInput; // Combos for each input
+        //private ComboData[][] combosPerInput; // Combos for each input
         private int comboDepth;
         private ACTIONINPUT[] availableNextMoves;
         private bool hasClickedDelete;
@@ -74,10 +72,10 @@ namespace Rpahel
                 {
                     CharactersWindow();
 
-                    if (selectedCombo == null)
-                        StatsWindow();
-                    else
-                        ComboDataWindow();
+                    //if (selectedCombo == null)
+                    //    StatsWindow();
+                    //else
+                    //    ComboDataWindow();
                 }
                 GUILayout.EndVertical();
 
@@ -125,25 +123,6 @@ namespace Rpahel
             return false;
         }
 
-        private void LoadFighterComboData()
-        {
-            fighterComboData = selectedFighter.comboData;
-            comboDepth = fighterComboData.GetComboDepth();
-            combosNbPerInput = new int[comboDepth];
-            combosPerInput = new ComboData[comboDepth][];
-            for (int i = 1; i <= comboDepth; i++)
-            {
-                combosNbPerInput[i - 1] = fighterComboData.GetNbOfCombosAtDepth(i);
-
-                //Debug.Log("Combos at depth " + i + ": " + combosNbPerInput[i - 1]);
-
-                if (i == 1)
-                    combosPerInput[i - 1] = new ComboData[1] { fighterComboData };
-                else
-                    combosPerInput[i - 1] = fighterComboData.GetAllCombosAtDepth(i);
-            }
-        }
-
         private void CharacterSelectButtons()
         {
             foreach (string folder in subFolders)
@@ -152,45 +131,42 @@ namespace Rpahel
                 if (GUILayout.Button(fighterName))
                 {
                     Save(selectedFighter);
-                    selectedCombo = null;
+                    //selectedCombo = null;
                     selectedFighter = Resources.Load<FighterSO>("ScriptableObjects/FIGHTERS" + "/FIGHTER_" + fighterName + "/FIGHTER_" + fighterName);
-                    LoadFighterComboData();
+                    // TODO : Load Combos
                 }
             }
         }
 
-        private void CreateNewCharacter()
+        private void CreateNewCharacter(string characterName)
         {
             // Creation d'un nouveau FIGHTER S.O. et sa SPEATK
             selectedFighter = ScriptableObject.CreateInstance<FighterSO>();
             SpecialAttackSO speAtk = ScriptableObject.CreateInstance<SpecialAttackSO>();
-            selectedFighter.specialAttack = speAtk;
-            selectedFighter.name = newFighterName;
-            newFighterName = newFighterName.ToUpper().Replace(" ", "").Replace("_", "");
-
-            // Creation d'un nouveau COMBODATA pour le nouveau FIGHTER
-            selectedFighter.comboData = new ComboData(true);
-            LoadFighterComboData();
+            //selectedFighter.specialAttack = speAtk;
+            selectedFighter.name = characterName;
+            characterName = characterName.ToUpper().Replace(" ", "").Replace("_", ""); 
 
             // Creation d'un dossier pour le nouveau FIGHTER
-            string path = AssetDatabase.CreateFolder(fightersSOpath, "FIGHTER_" + newFighterName);
+            string path = AssetDatabase.CreateFolder(fightersSOpath, "FIGHTER_" + characterName);
             path = AssetDatabase.GUIDToAssetPath(path);
-            AssetDatabase.CreateAsset(selectedFighter, path + "/FIGHTER_" + newFighterName + ".asset");
-            AssetDatabase.CreateAsset(speAtk, path + "/SPEATK_" + newFighterName + ".asset");
-            selectedFighter.filePath = path;
+            AssetDatabase.CreateAsset(selectedFighter, path + "/FIGHTER_" + characterName + ".asset");
+            AssetDatabase.CreateAsset(speAtk, path + "/SPEATK_" + characterName + ".asset");
+            //selectedFighter.filePath = path;
+
+            // TODO: Creation d'un nouveau COMBODATA pour le nouveau FIGHTER
 
             // Update Directories
             subFolders = Directory.GetDirectories(fightersSOpath, "FIGHTER_*", SearchOption.TopDirectoryOnly);
             fighterNames = UpdateFighterNames();
 
             // Clear name field
-            newFighterName = "";
+            characterName = "";
 
-            // Ajouter a la liste des FIGHTERS
+            // Add to Fighters List
             fightersList.fighters.Add(selectedFighter);
 
             Save(selectedFighter);
-
             Save(fightersList);
         }
         
@@ -212,8 +188,8 @@ namespace Rpahel
                     else
                     {
                         Save(selectedFighter);
-                        selectedCombo = null;
-                        CreateNewCharacter();
+                        //selectedCombo = null;
+                        CreateNewCharacter(newFighterName);
                     }
                 }
             }
@@ -244,27 +220,7 @@ namespace Rpahel
                 GUILayout.Label("Stats" + (selectedFighter == null ? "" : (" - " + selectedFighter.name)), labelStyle);
                 if (selectedFighter != null)
                 {
-                    selectedFighter.name = EditorGUILayout.TextField("Name: ", selectedFighter.name);
-                    selectedFighter.icon = (Sprite)EditorGUILayout.ObjectField("Icon: ", selectedFighter.icon, typeof(Sprite), false);
-                    selectedFighter.fighterPrefab = (GameObject)EditorGUILayout.ObjectField("Prefab: ", selectedFighter.fighterPrefab, typeof(GameObject), false);
-                    selectedFighter.color = EditorGUILayout.ColorField("Color: ", selectedFighter.color);
-
-                    GUILayout.Label("Type: ", GUILayout.ExpandWidth(false));
-                    selectedFighter.species = EditorGUILayout.TextField(selectedFighter.species);
-                    GUILayout.Label("Description: ", GUILayout.ExpandWidth(false));
-                    selectedFighter.description = EditorGUILayout.TextArea(selectedFighter.description, textAreaStyle);
-                    GUILayout.Label("Start Dialogue: ", GUILayout.ExpandWidth(false));
-                    selectedFighter.startDialogue = EditorGUILayout.TextArea(selectedFighter.startDialogue, textAreaStyle);
-                    GUILayout.Label("End Dialogue: ", GUILayout.ExpandWidth(false));
-                    selectedFighter.endDialogue = EditorGUILayout.TextArea(selectedFighter.endDialogue, textAreaStyle);
-
-                    selectedFighter.maxHealth = EditorGUILayout.IntField("Max Health: ", selectedFighter.maxHealth);
-                    selectedFighter.maxStamina = EditorGUILayout.IntField("Max Stamina: ", selectedFighter.maxStamina);
-                    selectedFighter.maxSpecialMeter = EditorGUILayout.FloatField("Max Special Meter: ", selectedFighter.maxSpecialMeter);
-
-                    selectedFighter.specialAttack = (SpecialAttackSO)EditorGUILayout.ObjectField("Special Attack: ", selectedFighter.specialAttack, typeof(SpecialAttackSO), false);
-                    GUILayout.Label("Path: ", GUILayout.ExpandWidth(false));
-                    GUILayout.Label(selectedFighter.filePath, labelStyle);
+                    // TODO : SelectedFighter.OnGUI()
                 }
             }
             GUILayout.EndScrollView();
@@ -278,10 +234,10 @@ namespace Rpahel
 
                 if (availableNextMoves[i] != ACTIONINPUT.DODGE && GUILayout.Button(((ACTIONINPUT)i).ToString()))
                 {
-                    selectedCombo.CreateNextMove((ACTIONINPUT)i);
-                    LoadFighterComboData();
+                    //selectedCombo.CreateNextMove((ACTIONINPUT)i);
+                    // Load combo data
                     Save(selectedFighter);
-                    availableNextMoves = selectedCombo.AvailableNextMoves();
+                    //availableNextMoves = selectedCombo.AvailableNextMoves();
                 }
             }
         }
@@ -297,14 +253,16 @@ namespace Rpahel
             // Stats section
             _statsScrollPosition = GUILayout.BeginScrollView(_statsScrollPosition);
             {
-                GUILayout.Label(selectedFighter.name + ": Combo " + selectedCombo.name, labelStyle);
+                //GUILayout.Label(selectedFighter.name + ": Combo " + selectedCombo.name, labelStyle);
 
+                /*
                 selectedCombo.name = EditorGUILayout.TextField("Name: ", selectedCombo.name);
                 GUILayout.Label("Attack Input: " + selectedCombo.actionInput.ToString());
                 selectedCombo.damage = EditorGUILayout.IntField("Damage: ", selectedCombo.damage);
                 selectedCombo.inflictedState = (STATE)EditorGUILayout.EnumPopup("Inflicted State: ", selectedCombo.inflictedState);
                 selectedCombo.animation = (AnimationClip)EditorGUILayout.ObjectField("Animation Clip: ", selectedCombo.animation, typeof(AnimationClip), false);
-                
+                */
+
                 if (availableNextMoves != null)
                 {
                     EditorGUILayout.Space(20);
@@ -314,6 +272,7 @@ namespace Rpahel
 
                 EditorGUILayout.Space(20);
 
+                /*
                 if (selectedCombo.inputNb > 2)
                 {
                     if (!hasClickedDelete)
@@ -333,11 +292,12 @@ namespace Rpahel
                             hasClickedDelete = false;
                             selectedCombo.DeleteMove();
                             selectedCombo = null;
-                            LoadFighterComboData();
+                            // Load combo data
                             Save(selectedFighter);
                         }
                     }
                 }
+                */
             }
             GUILayout.EndScrollView();
         }
@@ -357,6 +317,7 @@ namespace Rpahel
                             for (int j = 0; j < combosNbPerInput[i]; j++)
                             {
                                 GUILayout.FlexibleSpace();
+                                /*
                                 ComboData currentCombo = combosPerInput[i][j];
 
                                 if (GUILayout.Button(currentCombo.name))
@@ -376,7 +337,7 @@ namespace Rpahel
                                         currentCombo.PositionOnGui,
                                         0);
                                 }
-
+                                */
                                 GUILayout.FlexibleSpace();
                             }
                         }
