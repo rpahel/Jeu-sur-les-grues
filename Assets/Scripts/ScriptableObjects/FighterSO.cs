@@ -24,7 +24,6 @@ namespace Rpahel
         private float maxSpecialMeter;
 
         // Attack
-        private Attack attack;
         private SpecialAttackSO specialAttack;
 
 #if UNITY_EDITOR

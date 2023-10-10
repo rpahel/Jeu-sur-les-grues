@@ -10,11 +10,11 @@ namespace Rpahel
         public new string name;
         //Cout en stamina
         public float staminaCost;
-        //Degats infligés
+        //Degats infliges
         public float inflictedDmg;
-        //Degats subis(valeur négative = tu te soignes)
+        //Degats subis(valeur negative = tu te soignes)
         public float selfDmg;
-        //Etat infligé
+        //Etat inflige
         public STATE inflictedState;
         //Etat subis
         public STATE selfState;
