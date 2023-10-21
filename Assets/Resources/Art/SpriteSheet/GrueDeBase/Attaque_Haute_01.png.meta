@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3c10e58e51073944badff041a68e980
+guid: e7f20644b6f57ca4e8e3d1da1f1704a5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,133 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IDLE_01_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 2000
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f221d2b8d5345d47b08cdb7a6579086
-      internalID: 1615636377
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_1
-      rect:
-        serializedVersion: 2
-        x: 400
-        y: 2000
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8bc5312162d2fe74cbcd489782049e47
-      internalID: -1492737734
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_2
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 2000
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d4538a13a76c5974281dc0e172f814bd
-      internalID: 92797654
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_3
-      rect:
-        serializedVersion: 2
-        x: 1200
-        y: 2000
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02c47b5b601e83546babc08640208f70
-      internalID: 511339516
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_4
-      rect:
-        serializedVersion: 2
-        x: 1600
-        y: 2000
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b5a64c53d3999f4409d2e1e234a36bc9
-      internalID: -1533776287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_5
-      rect:
-        serializedVersion: 2
-        x: 2000
-        y: 2000
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 52f29c70680967845b9479fc52456c60
-      internalID: 566951699
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_6
+      name: Attaque_Haute_01_0
       rect:
         serializedVersion: 2
         x: 0
@@ -250,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c647fcdf32dcbab4ab58d6215b444dfc
-      internalID: 1710750176
+      spriteID: 8c6ab650744a2964daaab0264592a041
+      internalID: 959185762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_7
+      name: Attaque_Haute_01_1
       rect:
         serializedVersion: 2
         x: 400
@@ -271,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7190f9e167301114fb78c9ef53123627
-      internalID: 1678520955
+      spriteID: 5e3ccafdf7ec9814fa2844ac4acf89a4
+      internalID: 477774193
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_8
+      name: Attaque_Haute_01_2
       rect:
         serializedVersion: 2
         x: 800
@@ -292,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 953cedc40f8526640a630e79b27ff4ed
-      internalID: 1707941046
+      spriteID: 1dba700802906d941a1e7c4716eb6314
+      internalID: 370159033
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_9
+      name: Attaque_Haute_01_3
       rect:
         serializedVersion: 2
         x: 1200
@@ -313,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 87345d7065d77234682d8e5f714d080c
-      internalID: -204570713
+      spriteID: 568cc35c790f7de4bbea2fc8366c58d7
+      internalID: -251344222
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_10
+      name: Attaque_Haute_01_4
       rect:
         serializedVersion: 2
         x: 1600
@@ -334,35 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c77dd8cb7400f642b6ff50f8f319ccc
-      internalID: -179709192
+      spriteID: d168b9e34346f8e41ad94bf9c9a90c00
+      internalID: 96677684
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_11
-      rect:
-        serializedVersion: 2
-        x: 2000
-        y: 1600
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4ccca2b51ae643540bb8cc4567441394
-      internalID: -1853997797
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_12
+      name: Attaque_Haute_01_5
       rect:
         serializedVersion: 2
         x: 0
@@ -376,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 565d3f4b63b40694dae3eeafdc6e180c
-      internalID: -1790305533
+      spriteID: 713a0ff2801aada4d8ab8ee47ce64326
+      internalID: -1570684667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_13
+      name: Attaque_Haute_01_6
       rect:
         serializedVersion: 2
         x: 400
@@ -397,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 993f0e1c05fbadb43b6b26b8d7e79a62
-      internalID: 1238857671
+      spriteID: 4d558faf4a7b69a46ba852a9fd3f6ec6
+      internalID: 894768769
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_14
+      name: Attaque_Haute_01_7
       rect:
         serializedVersion: 2
         x: 800
@@ -418,14 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f7f6f435de8dd3419718f29b8f5d153
-      internalID: 551143974
+      spriteID: 46dd529c625e94b4a9c7e0578df030ab
+      internalID: -446408440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_15
+      name: Attaque_Haute_01_8
       rect:
         serializedVersion: 2
         x: 1200
@@ -439,14 +292,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9d1f4137ede33245b0149a652dbf496
-      internalID: -165195433
+      spriteID: 5cd1e6c17e5f6bb4da2980f0ae83447a
+      internalID: 2128145101
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_16
+      name: Attaque_Haute_01_9
       rect:
         serializedVersion: 2
         x: 1600
@@ -460,35 +313,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26bbecd4426a0f643aeca3251c9e4afa
-      internalID: -1950656288
+      spriteID: 60902d73173dcfb459b45fade415769f
+      internalID: -1290668384
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_17
-      rect:
-        serializedVersion: 2
-        x: 2000
-        y: 1200
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5fa5883146a1d55419ca81b11dcccd52
-      internalID: 114827345
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_18
+      name: Attaque_Haute_01_10
       rect:
         serializedVersion: 2
         x: 0
@@ -502,14 +334,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bff2da4e0efb8645b1ff4b0f40391c0
-      internalID: -1480439816
+      spriteID: d4187317c478b9b4591c54507e2b0aa7
+      internalID: 1944655235
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_19
+      name: Attaque_Haute_01_11
       rect:
         serializedVersion: 2
         x: 400
@@ -523,14 +355,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c434946522904c34f9b4142d5cad9a09
-      internalID: -1908161952
+      spriteID: 91567d6f9150a954691657ec969d2d0f
+      internalID: -1309225189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_20
+      name: Attaque_Haute_01_12
       rect:
         serializedVersion: 2
         x: 800
@@ -544,14 +376,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ff5ad23dbed3324fa07b320cba3cfb4
-      internalID: -2123948265
+      spriteID: 7332d5d8cca6e68449f3d7714cad0b0a
+      internalID: 35400647
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_21
+      name: Attaque_Haute_01_13
       rect:
         serializedVersion: 2
         x: 1200
@@ -565,14 +397,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34e565558c700d14f87b6ddba59aea78
-      internalID: 1141688614
+      spriteID: af5c7e311523f57458c0cd0003b770d8
+      internalID: 878037162
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_22
+      name: Attaque_Haute_01_14
       rect:
         serializedVersion: 2
         x: 1600
@@ -586,35 +418,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 242269f61506be743a1d130537b6caf4
-      internalID: -656023089
+      spriteID: 0571b0b1e111f1d43aaf830d9b131afe
+      internalID: 715883560
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_23
-      rect:
-        serializedVersion: 2
-        x: 2000
-        y: 800
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f43054e1a207124e972da855e58d974
-      internalID: -134841086
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_24
+      name: Attaque_Haute_01_15
       rect:
         serializedVersion: 2
         x: 0
@@ -628,14 +439,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97d891613fb423449863b2c83f328f6b
-      internalID: 1169371288
+      spriteID: fa71921b395f33847a4b91304201db82
+      internalID: 683786511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_25
+      name: Attaque_Haute_01_16
       rect:
         serializedVersion: 2
         x: 400
@@ -649,14 +460,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 840120c15fffa2b49a5bb6f032575d68
-      internalID: -1261603469
+      spriteID: 52ff28cce10699845818c5f88efcc663
+      internalID: 644328470
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_26
+      name: Attaque_Haute_01_17
       rect:
         serializedVersion: 2
         x: 800
@@ -670,14 +481,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50e1def6d91e683448eb04bc39fa3aef
-      internalID: 1620823451
+      spriteID: 60962e2a5dc2d304eb21c00d2e9db660
+      internalID: -583025393
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_27
+      name: Attaque_Haute_01_18
       rect:
         serializedVersion: 2
         x: 1200
@@ -691,14 +502,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66b23eb1fbbf4c146825d395813c4e07
-      internalID: -1995003385
+      spriteID: c55005bb53ade12459093ec956562171
+      internalID: 882621941
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_28
+      name: Attaque_Haute_01_19
       rect:
         serializedVersion: 2
         x: 1600
@@ -712,35 +523,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 896b382a9aa40814c8927c1d44188af3
-      internalID: 1666231641
+      spriteID: 31e43b7d638c60746a328e32d4f2ff15
+      internalID: -1996789086
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_29
-      rect:
-        serializedVersion: 2
-        x: 2000
-        y: 400
-        width: 400
-        height: 400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c408aa3850824443815910dbf4e833e
-      internalID: 623002952
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_30
+      name: Attaque_Haute_01_20
       rect:
         serializedVersion: 2
         x: 0
@@ -754,14 +544,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00ab3462215013049905bb96ccc09b71
-      internalID: -891405157
+      spriteID: 93ebf18953902f643867797db7afb76c
+      internalID: 1065376396
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IDLE_01_31
+      name: Attaque_Haute_01_21
       rect:
         serializedVersion: 2
         x: 400
@@ -775,50 +565,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db5a48349d4019146b9f8392709cc174
-      internalID: -1365384711
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_32
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2400
-        height: 2400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bcb7f736104851e4da336768fbc540ed
-      internalID: 1265131040
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_01_33
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2400
-        height: 2400
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c83413d2025bd35488075c26ac941a0a
-      internalID: 122567550
+      spriteID: 9b9a1b218bf07a8438773140e5b593ac
+      internalID: -301870036
       vertices: []
       indices: 
       edges: []
@@ -834,40 +582,28 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      IDLE_01_0: 1615636377
-      IDLE_01_1: -1492737734
-      IDLE_01_10: -179709192
-      IDLE_01_11: -1853997797
-      IDLE_01_12: -1790305533
-      IDLE_01_13: 1238857671
-      IDLE_01_14: 551143974
-      IDLE_01_15: -165195433
-      IDLE_01_16: -1950656288
-      IDLE_01_17: 114827345
-      IDLE_01_18: -1480439816
-      IDLE_01_19: -1908161952
-      IDLE_01_2: 92797654
-      IDLE_01_20: -2123948265
-      IDLE_01_21: 1141688614
-      IDLE_01_22: -656023089
-      IDLE_01_23: -134841086
-      IDLE_01_24: 1169371288
-      IDLE_01_25: -1261603469
-      IDLE_01_26: 1620823451
-      IDLE_01_27: -1995003385
-      IDLE_01_28: 1666231641
-      IDLE_01_29: 623002952
-      IDLE_01_3: 511339516
-      IDLE_01_30: -891405157
-      IDLE_01_31: -1365384711
-      IDLE_01_32: 1265131040
-      IDLE_01_33: 122567550
-      IDLE_01_4: -1533776287
-      IDLE_01_5: 566951699
-      IDLE_01_6: 1710750176
-      IDLE_01_7: 1678520955
-      IDLE_01_8: 1707941046
-      IDLE_01_9: -204570713
+      Attaque_Haute_01_0: 959185762
+      Attaque_Haute_01_1: 477774193
+      Attaque_Haute_01_10: 1944655235
+      Attaque_Haute_01_11: -1309225189
+      Attaque_Haute_01_12: 35400647
+      Attaque_Haute_01_13: 878037162
+      Attaque_Haute_01_14: 715883560
+      Attaque_Haute_01_15: 683786511
+      Attaque_Haute_01_16: 644328470
+      Attaque_Haute_01_17: -583025393
+      Attaque_Haute_01_18: 882621941
+      Attaque_Haute_01_19: -1996789086
+      Attaque_Haute_01_2: 370159033
+      Attaque_Haute_01_20: 1065376396
+      Attaque_Haute_01_21: -301870036
+      Attaque_Haute_01_3: -251344222
+      Attaque_Haute_01_4: 96677684
+      Attaque_Haute_01_5: -1570684667
+      Attaque_Haute_01_6: 894768769
+      Attaque_Haute_01_7: -446408440
+      Attaque_Haute_01_8: 2128145101
+      Attaque_Haute_01_9: -1290668384
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
